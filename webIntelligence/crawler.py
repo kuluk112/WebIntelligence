@@ -258,7 +258,8 @@ class Crawler:
             if "http" in i:
                 result_links.append(i)
         return result_links
-
+'''
 crawler = Crawler(3, 1)
 crawler.crawl("https://stackoverflow.com")
 print ("dwa")
+'''
