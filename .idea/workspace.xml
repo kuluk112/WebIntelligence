@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="119b9fa0-2857-4952-b35e-60781aec04a2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/webIntelligence/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webIntelligence/crawler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/WebIntelligence.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/WebIntelligence.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webIntelligence/crawler.py" beforeDir="false" afterPath="$PROJECT_DIR$/webIntelligence/crawler.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -12,7 +14,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/WebIntelligence$crawler.coverage" NAME="crawler Coverage Results" MODIFIED="1547391643674" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/webIntelligence" />
+    <SUITE FILE_PATH="coverage/WebIntelligence$crawler.coverage" NAME="crawler Coverage Results" MODIFIED="1547488664398" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/webIntelligence" />
   </component>
   <component name="FUSProjectUsageTrigger">
     <session id="-464147261">
@@ -45,44 +47,111 @@
         </counts>
       </usages-collector>
     </session>
+    <session id="-555049379">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="1" />
+          <entry key="project.open.time.0" value="1" />
+          <entry key="project.open.time.22" value="1" />
+          <entry key="project.opened" value="2" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="py" value="6348" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="Python" value="6348" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="py" value="7" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="Python" value="7" />
+        </counts>
+      </usages-collector>
+    </session>
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/webIntelligence/crawler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="326">
-              <caret line="78" lean-forward="true" selection-start-line="78" selection-end-line="78" />
+            <state relative-caret-position="171">
+              <caret line="228" column="17" lean-forward="true" selection-start-line="228" selection-start-column="17" selection-end-line="228" selection-end-column="17" />
               <folding>
-                <element signature="e#0#22#0" expanded="true" />
-                <marker date="1547389521679" expanded="true" signature="259:352" ph="..." />
-                <marker date="1547389521679" expanded="true" signature="492:589" ph="..." />
-                <marker date="1547389521679" expanded="true" signature="603:774" ph="..." />
-                <marker date="1547389521679" expanded="true" signature="1116:1125" ph="..." />
-                <marker date="1547389521679" expanded="true" signature="1116:1231" ph="..." />
-                <marker date="1547389521679" expanded="true" signature="1942:2173" ph="..." />
-                <marker date="1547389521679" expanded="true" signature="2209:2218" ph="..." />
-                <marker date="1547389521679" expanded="true" signature="2452:2453" ph="..." />
-                <marker date="1547389521679" expanded="true" signature="2571:2576" ph="..." />
+                <element signature="e#0#11#0" expanded="true" />
+                <marker date="1547488584441" expanded="true" signature="4181:4277" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/Anaconda3/envs/WebIntelligence/Lib/urllib/request.py">
+        <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/site-packages/urllib3/request.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="383" selection-start-line="383" selection-end-line="383" />
+            <state relative-caret-position="185">
+              <caret line="88" selection-start-line="88" selection-end-line="88" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/Anaconda3/envs/WebIntelligence/Lib/urllib/robotparser.py">
+        <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/site-packages/urllib3/util/url.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="60" selection-start-line="60" selection-end-line="60" />
+            <state relative-caret-position="134">
+              <caret line="166" selection-start-line="166" selection-end-line="166" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/site-packages/urllib3/poolmanager.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="134">
+              <caret line="310" selection-start-line="310" selection-end-line="310" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/codecs.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="101">
+              <caret line="310" selection-start-line="310" selection-end-line="310" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="28271">
+              <caret line="1663" selection-start-line="1663" selection-end-line="1663" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/urllib/parse.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="6188">
+              <caret line="366" selection-start-line="366" selection-end-line="366" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/queue.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="229" selection-start-line="229" selection-end-line="229" />
             </state>
           </provider>
         </entry>
@@ -95,6 +164,26 @@
         <option value="Python Script" />
       </list>
     </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>conten</find>
+      <find>(delay * 1000)</find>
+      <find>urlparse</find>
+      <find>find</find>
+      <find>put</find>
+      <find>self.root_pages</find>
+      <find>1000</find>
+      <find>visit</find>
+      <find>delay</find>
+      <find>crawl_delay</find>
+      <find>Page</find>
+      <find>Page(</find>
+      <find>Page(</find>
+      <find>_get</find>
+      <find>RootPage(</find>
+      <find>_put</find>
+    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -112,27 +201,16 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="952" />
-    <option name="width" value="977" />
-    <option name="height" value="1038" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="950" />
+    <option name="width" value="979" />
+    <option name="height" value="1040" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope">
-        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
-          <expand>
-            <path>
-              <item name="WebIntelligence" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -149,11 +227,22 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope">
+        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
+          <expand>
+            <path>
+              <item name="WebIntelligence" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../WI18-part2" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
@@ -216,13 +305,13 @@
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.09261745" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.095302016" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32624114" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.39148936" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.20567375" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.35177305" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.37021276" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -250,42 +339,88 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/webIntelligence/crawler.py</url>
-          <line>75</line>
-          <option name="timeStamp" value="1" />
+          <line>71</line>
+          <option name="timeStamp" value="57" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/webIntelligence/crawler.py</url>
+          <line>263</line>
+          <option name="timeStamp" value="60" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/webIntelligence/crawler.py</url>
+          <line>228</line>
+          <option name="timeStamp" value="62" />
         </line-breakpoint>
       </breakpoints>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/Anaconda3/envs/WebIntelligence/Lib/urllib/request.py">
+    <entry file="file://$USER_HOME$/Anaconda3/envs/WebIntelligence/Lib/urllib/request.py" />
+    <entry file="file://$USER_HOME$/Anaconda3/envs/WebIntelligence/Lib/urllib/robotparser.py" />
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="383" selection-start-line="383" selection-end-line="383" />
+        <state relative-caret-position="28271">
+          <caret line="1663" selection-start-line="1663" selection-end-line="1663" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Anaconda3/envs/WebIntelligence/Lib/urllib/robotparser.py">
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/urllib/parse.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="60" selection-start-line="60" selection-end-line="60" />
+        <state relative-caret-position="6188">
+          <caret line="366" selection-start-line="366" selection-end-line="366" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/site-packages/urllib3/util/url.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="134">
+          <caret line="166" selection-start-line="166" selection-end-line="166" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/site-packages/urllib3/poolmanager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="134">
+          <caret line="310" selection-start-line="310" selection-end-line="310" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/site-packages/urllib3/request.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="185">
+          <caret line="88" selection-start-line="88" selection-end-line="88" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/codecs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="101">
+          <caret line="310" selection-start-line="310" selection-end-line="310" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/queue.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="229" selection-start-line="229" selection-end-line="229" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/webIntelligence/crawler.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="326">
-          <caret line="78" lean-forward="true" selection-start-line="78" selection-end-line="78" />
+        <state relative-caret-position="171">
+          <caret line="228" column="17" lean-forward="true" selection-start-line="228" selection-start-column="17" selection-end-line="228" selection-end-column="17" />
           <folding>
-            <element signature="e#0#22#0" expanded="true" />
-            <marker date="1547389521679" expanded="true" signature="259:352" ph="..." />
-            <marker date="1547389521679" expanded="true" signature="492:589" ph="..." />
-            <marker date="1547389521679" expanded="true" signature="603:774" ph="..." />
-            <marker date="1547389521679" expanded="true" signature="1116:1125" ph="..." />
-            <marker date="1547389521679" expanded="true" signature="1116:1231" ph="..." />
-            <marker date="1547389521679" expanded="true" signature="1942:2173" ph="..." />
-            <marker date="1547389521679" expanded="true" signature="2209:2218" ph="..." />
-            <marker date="1547389521679" expanded="true" signature="2452:2453" ph="..." />
-            <marker date="1547389521679" expanded="true" signature="2571:2576" ph="..." />
+            <element signature="e#0#11#0" expanded="true" />
+            <marker date="1547488584441" expanded="true" signature="4181:4277" ph="..." />
           </folding>
         </state>
       </provider>
