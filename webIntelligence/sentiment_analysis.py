@@ -51,11 +51,19 @@ class SentimentAnalysis:
 
 
     def train_NBC(self, list_tuples, negate, pos):
+        train_len = len(list_tuples)
+        count = 0
         for i in list_tuples:
             self.train_with_item(i, negate, pos)
+            count += 1
+            if count == 1:
+                print(1)
+                print(train_len)
+            if count % 1000 == 0:
+                print(count)
             #                                          1 and 2 --> smoothing                   2 --> number of classes
-        self.positive_probability = (self.positive_class_count + 1 / (self.positive_class_count + self.negative_class_count) + 2)
-        self.negative_probability = (self.negative_class_count + 1 / (self.positive_class_count + self.negative_class_count) + 2)
+        self.positive_probability = (self.positive_class_count + 1) / ((self.positive_class_count + self.negative_class_count) + 2)
+        self.negative_probability = (self.negative_class_count + 1) / ((self.positive_class_count + self.negative_class_count) + 2)
 
 
 
@@ -136,8 +144,79 @@ class SentimentAnalysis:
                 list_key_val.append((i, None))
             return list_key_val
 
+    def evaluate(self, testset, negate, pos):
+        true_positive = 0
+        false_positive = 0
+        true_negative = 0
+        false_negative = 0
+        total_correct = 0
+        total_false = 0
+        guess_true = 0
+        guess_false = 0
+        test_len = len(testset)
+        count = 0
 
+        for item in testset:
 
+            label = item[1]
+            text = item[0]
+
+            pos, neg = self.classify_with_NBC(text, negate, pos)
+
+            if pos >= neg:
+                result = True
+            else:
+                result = False
+
+            if result is label:
+                if result is True:
+                    guess_true += 1
+                    true_positive += 1
+                    total_correct += 1
+                if result is False:
+                    guess_false += 1
+                    true_negative += 1
+                    total_correct += 1
+            else:
+                if result is True:
+                    guess_true += 1
+                    false_positive += 1
+                    total_false += 1
+                if result is False:
+                    guess_false += 1
+                    false_negative += 1
+                    total_false += 1
+            count += 1
+            if count == 1:
+                print(1)
+                print(test_len)
+            if count % 1000 == 0:
+                print(count)
+
+        precision = true_positive / (true_positive + false_positive)
+        recall = true_positive / (true_positive + false_negative)
+        accuracy = total_correct / (total_correct + total_false)
+        f1 = 2 * ((precision * recall)/(precision + recall))
+        return precision, recall, accuracy, f1
+
+    def load_sentiment_data(self, path):
+        dataset = []
+        with open(path, "r") as lines:
+            for line in lines:
+                if line.startswith("review/score"):
+                    current_score = int(float(line.split("review/score: ")[1].rstrip()))
+                    positive = None
+                    if current_score > 3:
+                        positive = True
+                    elif current_score < 3:
+                        positive = False
+                if line.startswith("review/summary:") and current_score is not 3:
+                    review = line.split("review/summary: ")[1].rstrip()
+
+                if line.startswith("review/text:") and current_score is not 3:
+                    review += " " + line.split("review/text: ")[1].rstrip()
+                    dataset.append((review,positive))
+        return dataset
 
 
 
@@ -147,7 +226,7 @@ class SentimentAnalysis:
 
 #for i in nltk.pos_tag(text):
 #    print(i)
-SA = SentimentAnalysis()
+#SA = SentimentAnalysis()
 #negated = SA.negate_words("i didnt, like it... i did not not like it")
 #tokens = nltk.word_tokenize(negated)
 #for i in SA.tokenize_and_extract_features("i didnt, like it... i did not not like it", negate=True, pos=True):
@@ -155,7 +234,7 @@ SA = SentimentAnalysis()
 
 #SA.train_with_item(("this is a sentence sentence", True), True, True)
 #SA.train_with_item(("this is a sentence sentence", False), True, True)
-SA.train_NBC([("a good movie", True), ("a good movie", True), ("a bad film", False)], True, True)
-pos, neg = SA.classify_with_NBC("bad film", True, True)
-print(pos, neg)
+#SA.train_NBC([("a good movie", True), ("a good movie", True), ("a bad film", False)], True, True)
+#pos, neg = SA.classify_with_NBC("bad film", True, True)
+#print(pos, neg)
 

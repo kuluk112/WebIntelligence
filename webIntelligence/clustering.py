@@ -100,11 +100,11 @@ def compute_eigenvectors_and_eigenvalues(laplacian_matrix):
     eigen_values,eigen_vectors = eig(laplacian_matrix)
     return eigen_values,eigen_vectors
 
-def create_laplacian_matrix(adjacency_matric,degree_marix):
+def create_laplacian_matrix(adjacency_matrix,degree_matrix):
     laplacian_matrix = degree_matrix.__sub__(adjacency_matrix)
     return laplacian_matrix
 
-def draw_network(adjacency_matric):
+def draw_network(adjacency_matrix):
     g = nx.from_numpy_matrix(adjacency_matrix)
     layout = nx.spring_layout(g, pos=nx.circular_layout(g))
     nx.spring_layout
@@ -117,9 +117,9 @@ def k_means(eigen_values,eigen_vectors,k):
     clx,_ = vq(reduced_matrix,centroids)
     return clx
 def correct_eigen_format(eigen_values,eigen_vectors):
-    idx = np.argsort(eigen_values1)
-    eigen_values = eigen_values1[idx]
-    eigen_vectors = eigen_vectors1[:, idx]
+    idx = np.argsort(eigen_values)
+    eigen_values = eigen_values[idx]
+    eigen_vectors = eigen_vectors[:, idx]
 
     eigen_values = eigen_values[1:]
     eigen_vectors = eigen_vectors[:, 1:]
@@ -167,26 +167,9 @@ def do_spectral_clustering_from_save(path,number_of_clusters):
     communities = assign_users_to_communities(users, eigen_values, eigen_vectors, number_of_clusters)
     return communities
 
-def load_sentiment_data(path):
-    dataset = []
-    with open(path, "r") as lines:
-        for line in lines:
-            if line.startswith("review/score"):
-                current_score = int(float(line.split("review/score: ")[1].rstrip()))
-                positive = None
-                if current_score > 3:
-                    positive = True
-                elif current_score < 3:
-                    positive = False
-            if line.startswith("review/summary:") and current_score is not 3:
-                review = line.split("review/summary: ")[1].rstrip()
-
-            if line.startswith("review/text:") and current_score is not 3:
-                review += " " + line.split("review/text: ")[1].rstrip()
-                dataset.append((review,positive))
-    return dataset
 
 
+'''
 path = "C://Users//Lasse//Desktop//Web intelligence//friendships.reviews.txt"
 path_sentiment_training_set = "C://Users//Lasse//Desktop//Web intelligence//SentimentTrainingData.txt"
 path_sentiment_test_set = "C://Users//Lasse//Desktop//Web intelligence//SentimentTestingData.txt"
@@ -200,3 +183,4 @@ pickle.dump(test_set, open("test_set.p", "wb"))
 #communities = do_spectral_clustering_from_save(path,number_of_clusters)
 
 print("test")
+'''
