@@ -1,5 +1,4 @@
 import time
-import urllib3.request
 from urllib.parse import urlparse
 from urllib import robotparser
 import urllib.request

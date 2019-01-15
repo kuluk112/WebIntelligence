@@ -26,6 +26,8 @@ class User:
         self.friends = []
         self.community_id = None
         self.review = None
+        self.score = 0
+        self.would_purchase = False
 
 def load_friendship_network(path):
 
@@ -100,11 +102,11 @@ def compute_eigenvectors_and_eigenvalues(laplacian_matrix):
     eigen_values,eigen_vectors = eig(laplacian_matrix)
     return eigen_values,eigen_vectors
 
-def create_laplacian_matrix(adjacency_matric,degree_marix):
+def create_laplacian_matrix(adjacency_matrix,degree_matrix):
     laplacian_matrix = degree_matrix.__sub__(adjacency_matrix)
     return laplacian_matrix
 
-def draw_network(adjacency_matric):
+def draw_network(adjacency_matrix):
     g = nx.from_numpy_matrix(adjacency_matrix)
     layout = nx.spring_layout(g, pos=nx.circular_layout(g))
     nx.spring_layout
@@ -117,9 +119,9 @@ def k_means(eigen_values,eigen_vectors,k):
     clx,_ = vq(reduced_matrix,centroids)
     return clx
 def correct_eigen_format(eigen_values,eigen_vectors):
-    idx = np.argsort(eigen_values1)
-    eigen_values = eigen_values1[idx]
-    eigen_vectors = eigen_vectors1[:, idx]
+    idx = np.argsort(eigen_values)
+    eigen_values = eigen_values[idx]
+    eigen_vectors = eigen_vectors[:, idx]
 
     eigen_values = eigen_values[1:]
     eigen_vectors = eigen_vectors[:, 1:]
@@ -186,6 +188,21 @@ def load_sentiment_data(path):
                 dataset.append((review,positive))
     return dataset
 
+def create_adjacency_matrix_from_communities(users):
+    user_list = list(users.values())
+    user_list = sorted(user_list, key=lambda user: user.id)
+    adjacency_matrix = np.zeros((len(users), len(users)))
+    row = 0
+    column = 0
+    for friend_with in user_list:
+        for friend_of in user_list:
+            if friend_of in friend_with.friends:
+                adjacency_matrix[row][column] = 1
+            column += 1
+        row += 1
+        column = 0
+
+    return adjacency_matrix
 
 path = "C://Users//Lasse//Desktop//Web intelligence//friendships.reviews.txt"
 path_sentiment_training_set = "C://Users//Lasse//Desktop//Web intelligence//SentimentTrainingData.txt"
