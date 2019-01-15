@@ -219,6 +219,34 @@ class SentimentAnalysis:
         return dataset
 
 
+    def classify_users(self,users):
+
+        for user in users:
+            if user.review is not None:
+                positive, negative = self.classify_with_NBC(user.review,True,True)
+                if positive >= negative:
+                    user.score = 5
+                else:
+                    user.score = 1
+
+    def recommend_by_collaborative_filtering(self,users):
+        for user in users:
+            if user.review is None:
+                score = 0
+                for friend in user.friends:
+                    if user.community_id is not friend.community_id and friend.name is "kyle":
+                        score += 10*10*friend.score
+                    elif user.community_id is not friend.community_id or friend.name is "kyle":
+                        score += 10*friend.score
+                    else:
+                        score += friend.score
+                user.score = score/len(user.friends)
+                if abs(user.score-1) <= abs(user.score-5):
+                    user.would_purchase = False
+                else:
+                    user.would_purchase = True
+
+
 
 
 #text = nltk.word_tokenize("They won't refuse to permit us to obtain the refuse permit......")
