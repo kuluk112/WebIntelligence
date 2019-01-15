@@ -26,6 +26,8 @@ class User:
         self.friends = []
         self.community_id = None
         self.review = None
+        self.score = 0
+        self.would_purchase = False
 
 def load_friendship_network(path):
 
@@ -168,6 +170,21 @@ def do_spectral_clustering_from_save(path,number_of_clusters):
     return communities
 
 
+def create_adjacency_matrix_from_communities(users):
+    user_list = list(users.values())
+    user_list = sorted(user_list, key=lambda user: user.id)
+    adjacency_matrix = np.zeros((len(users), len(users)))
+    row = 0
+    column = 0
+    for friend_with in user_list:
+        for friend_of in user_list:
+            if friend_of in friend_with.friends:
+                adjacency_matrix[row][column] = 1
+            column += 1
+        row += 1
+        column = 0
+
+    return adjacency_matrix
 
 '''
 path = "C://Users//Lasse//Desktop//Web intelligence//friendships.reviews.txt"
