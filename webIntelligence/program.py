@@ -1,9 +1,37 @@
 import webIntelligence.clustering
 import webIntelligence.sentiment_analysis
 import webIntelligence.text_processing
+import webIntelligence.crawler
+import webIntelligence.PageRanker
 import pickle
 
+
+def assignment_1():
+    priorities = 3
+    threads = 1
+    politeness_sec = 0.2
+    number_of_pages = 20
+    url_seed = "https://curlie.org/News/Headline_Links/"
+    crawler = webIntelligence.crawler.Crawler(priorities,threads,politeness_sec)
+    crawler.run_crawler(url_seed,number_of_pages)
+    pageranker = webIntelligence.PageRanker.PageRanker(crawler.page_list)
+    pageranker.give_pageranks()
+
+    search_engine = webIntelligence.text_processing.Indexer()
+    search_engine.create_inverted_index_from_pages(crawler.page_list)
+    search_engine.create_champlist(20)
+    query = "Trump's reference to Wounded Knee evokes the dark history of suppression of indigenous religions"
+    documents = search_engine.search(query)
+
+
+assignment_1()
+
 def assignment_2():
+
+    community_detector = webIntelligence.clustering.CommunityDetector
+    community_detector.do_spectral_clustering_initial()
+    community_detector.do_spectral_clustering_from_save()
+
     trainingset_path = "C://Users//Simon//Desktop//SentimentTrainingData.txt"
     testset_path = "C://Users//Simon//Desktop//SentimentTestingData.txt"
 
@@ -57,4 +85,4 @@ def fix_probs():
                 (SA.positive_class_count + SA.negative_class_count) + 2)
     pickle.dump(SA, open(file, "wb"))
 
-load_NBC()
+#load_NBC()

@@ -3,15 +3,12 @@ from urllib.parse import urlparse
 from urllib import robotparser
 import urllib.request
 import urllib.error
-import re
 from bs4 import BeautifulSoup
+from nltk import ngrams
 from queue import PriorityQueue
 import random
-from webIntelligence import text_processing as tp
-import webIntelligence.PageRanker
-import pickle
+import hashlib
 
-import heapq
 
 
 class BackQueue:
@@ -228,7 +225,7 @@ class Crawler:
         text = '\n'.join(chunk for chunk in chunks if chunk)
 
         page.content = text
-        sketch, hashed_super_shingles = tp.make_hashed_shingles_and_super_shingles(page.content)
+        sketch, hashed_super_shingles = self.make_hashed_shingles_and_super_shingles(page.content)
         page.sketch = sketch
         page.hashed_supershingles = hashed_super_shingles
         page.out_links = links
@@ -241,11 +238,45 @@ class Crawler:
                 result_links.append(i)
         return result_links
 
+    def make_hashed_shingles_and_super_shingles(self, content, shingle_size=8, super_shingle_size=6, seed=1234,
+                                                permutations=84):
+        random.seed(seed)
+        random_ints = []
+        for i in range(permutations):
+            random_ints.append(random.randint(0, 10 ** 42))
+        sketch = set()
+        hashed_shingles = set()
+        shingles = ngrams(content.split(), shingle_size)
+        shingles_set = set()
+        for shingle in shingles:
+            shingles_set.add(shingle)
 
-url = "https://curlie.org/News/Headline_Links/"
-number_of_pages = 3
-crawler = Crawler(3,1, 0.2)
-crawler.run_crawler(url,number_of_pages)
-pageranker = webIntelligence.PageRanker.PageRanker(crawler.page_list)
-pageranker.give_pageranks()
-pickle.dump(crawler.page_list, open("page_list.p", "wb"))
+        for permutation in random_ints:
+            for shingle in shingles_set:
+                hashcode = hashlib.md5(str(shingle).encode('utf-8')).hexdigest()
+                value = int(hashcode, 16)
+                hashed_shingles.add(value ^ permutation)
+            if len(hashed_shingles) is 0:
+                return set(), set()
+            sketch.add(min(hashed_shingles))
+            hashed_shingles.clear()
+
+        hashed_super_shingles = set()
+        sketch_list = list(sketch)
+        super_shingle_set = set()
+        elements_in_sketches = len(sketch)
+
+        non_overlapping_super_sketches = [sketch_list[i * super_shingle_size:(i + 1) * super_shingle_size] for i in
+                                          range((
+                                                            elements_in_sketches + super_shingle_size - 1) // super_shingle_size)]
+
+        for super_shingle in non_overlapping_super_sketches:
+            super_shingle_set.add(str(super_shingle))
+
+        for super_shingle in super_shingle_set:
+            hashcode = hashlib.md5(str(super_shingle).encode('utf-8')).hexdigest()
+            value = int(hashcode, 16)
+            hashed_super_shingles.add(value)
+
+        return sketch, hashed_super_shingles
+
