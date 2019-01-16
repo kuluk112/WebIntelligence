@@ -1,4 +1,5 @@
 import random
+from urllib.parse import urlparse
 
 
 class PageRanker:
@@ -24,8 +25,11 @@ class PageRanker:
             divisor = len(outer.out_links)
             y = 0
             for inner in self.network_list:
+                if outer.url.geturl() == inner.url.geturl():
+                    y += 1
+                    continue
                 for link in outer.out_links:
-                    if link == inner.url.geturl():
+                    if link.geturl() == inner.url.geturl():
                         if divisor != 0:
                             self.transition_probability_matrix[x][y] = 1/divisor
                         else:
@@ -39,9 +43,10 @@ class PageRanker:
             divisor = len(outer.out_links)
             y = 0
             for inner in self.network_list:
-                for link in outer.out_links:
-                    if divisor != 0:
-                        self.transition_probability_matrix[x][y] = ((1 - self.alpha) * self.transition_probability_matrix[x][y]) + (self.alpha * (1 / self.matrix_size))
+                if divisor != 0:
+                    self.transition_probability_matrix[x][y] = ((1 - self.alpha) * self.transition_probability_matrix[x][y]) + (self.alpha * (1 / self.matrix_size))
+                else:
+                    self.transition_probability_matrix[x][y] = 1/self.matrix_size
                 y += 1
             x += 1
 
@@ -72,13 +77,35 @@ class PageRanker:
         return surfer
 
 #((1 - self.alpha) * 1/divisor) + (self.alpha * (1 / self.matrix_size))
+    def remove_excessive_out_links(self):
+        good_links = []
+        page_list = []
+        for i in self.network_list:
+            for j in i.out_links:
+                url_obj = urlparse(j)
+
+                if url_obj.geturl() == i.url.geturl():
+                    break
+
+                for k in self.network_list:
+                    if k.url.geturl() == url_obj.geturl():
+                        good_links.append(url_obj)
+                        break
+            i.out_links = good_links
+            page_list.append(i)
+            good_links = []
+        self.network_list = page_list
+
+
 
     def give_pageranks(self):
+
+        self.remove_excessive_out_links()
 
         self.insert_connections()
         self.enable_teleportation()
 
-        #print_matrix(PR.transition_probability_matrix)
+        print_matrix(self.transition_probability_matrix)
 
         pageranks = self.page_rank(200)
 
