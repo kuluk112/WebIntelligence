@@ -169,24 +169,6 @@ def do_spectral_clustering_from_save(path,number_of_clusters):
     communities = assign_users_to_communities(users, eigen_values, eigen_vectors, number_of_clusters)
     return communities
 
-def load_sentiment_data(path):
-    dataset = []
-    with open(path, "r") as lines:
-        for line in lines:
-            if line.startswith("review/score"):
-                current_score = int(float(line.split("review/score: ")[1].rstrip()))
-                positive = None
-                if current_score > 3:
-                    positive = True
-                elif current_score < 3:
-                    positive = False
-            if line.startswith("review/summary:") and current_score is not 3:
-                review = line.split("review/summary: ")[1].rstrip()
-
-            if line.startswith("review/text:") and current_score is not 3:
-                review += " " + line.split("review/text: ")[1].rstrip()
-                dataset.append((review,positive))
-    return dataset
 
 def create_adjacency_matrix_from_communities(users):
     user_list = list(users.values())
@@ -204,6 +186,7 @@ def create_adjacency_matrix_from_communities(users):
 
     return adjacency_matrix
 
+'''
 path = "C://Users//Lasse//Desktop//Web intelligence//friendships.reviews.txt"
 path_sentiment_training_set = "C://Users//Lasse//Desktop//Web intelligence//SentimentTrainingData.txt"
 path_sentiment_test_set = "C://Users//Lasse//Desktop//Web intelligence//SentimentTestingData.txt"
@@ -217,3 +200,4 @@ pickle.dump(test_set, open("test_set.p", "wb"))
 #communities = do_spectral_clustering_from_save(path,number_of_clusters)
 
 print("test")
+'''
