@@ -3,7 +3,7 @@ import webIntelligence.sentiment_analysis
 import webIntelligence.text_processing
 import pickle
 
-def assignment_2():
+def training():
     trainingset_path = "C://Users//Simon//Desktop//SentimentTrainingData.txt"
     testset_path = "C://Users//Simon//Desktop//SentimentTestingData.txt"
 
@@ -57,4 +57,21 @@ def fix_probs():
                 (SA.positive_class_count + SA.negative_class_count) + 2)
     pickle.dump(SA, open(file, "wb"))
 
-load_NBC()
+def assignment_2():
+
+
+
+    users = []#method to cluster
+
+    SA = webIntelligence.sentiment_analysis.SentimentAnalysis()
+    SA.classify_users(users)
+    SA.recommend_by_collaborative_filtering(users)
+
+    for user in users:
+        if user.review is None:
+            print(user.name)
+            print(user.would_purchase)
+            print("\n")
+
+
+

@@ -105,7 +105,7 @@ class PageRanker:
         self.insert_connections()
         self.enable_teleportation()
 
-        print_matrix(self.transition_probability_matrix)
+        #print_matrix(self.transition_probability_matrix)
 
         pageranks = self.page_rank(200)
 

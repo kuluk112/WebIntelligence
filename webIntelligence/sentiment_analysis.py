@@ -249,6 +249,7 @@ class SentimentAnalysis:
 
 
 
+
 #text = nltk.word_tokenize("They won't refuse to permit us to obtain the refuse permit......")
 #insert in token words
 
