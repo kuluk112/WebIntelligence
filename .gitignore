@@ -104,3 +104,7 @@ venv.bak/
 .mypy_cache/
 
 \.idea/workspace\.xml
+
+webIntelligence/eigen_values\.p
+
+webIntelligence/eigen_vectors\.p

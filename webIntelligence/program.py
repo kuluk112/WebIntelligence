@@ -25,7 +25,6 @@ def assignment_1():
 
 
 
-
 def training():
     trainingset_path = "C://Users//Simon//Desktop//SentimentTrainingData.txt"
     testset_path = "C://Users//Simon//Desktop//SentimentTestingData.txt"
@@ -71,38 +70,29 @@ def load_NBC():
     print(accuracy)
     print(f1)
 
-def fix_probs():
-    file = "only_pos.p"
-    SA = pickle.load(open(file, "rb"))
-    SA.positive_probability = (SA.positive_class_count + 1) / (
-                (SA.positive_class_count + SA.negative_class_count) + 2)
-    SA.negative_probability = (SA.negative_class_count + 1) / (
-                (SA.positive_class_count + SA.negative_class_count) + 2)
-    pickle.dump(SA, open(file, "wb"))
 
 def assignment_2():
 
-    friendship_path = "C://Users//Simon//Desktop//friendships.reviews.txt"
+    friendship_path = "C://Users//Lasse//Desktop//Web intelligence//friendships.reviews.txt"
     number_of_clusters = 4
 
     community_detector = webIntelligence.clustering.CommunityDetector()
-    communities = community_detector.do_spectral_clustering_initial(friendship_path, number_of_clusters)
-    community_detector.do_spectral_clustering_from_save(friendship_path, number_of_clusters)
+    #communities = community_detector.do_spectral_clustering_initial(friendship_path, number_of_clusters)
+    communities = community_detector.do_spectral_clustering_from_save(friendship_path, number_of_clusters)
 
-    SA = webIntelligence.sentiment_analysis.SentimentAnalysis()
+    SA = pickle.load(open("negation_and_pos.p", "rb"))
+    for comm in communities:
+        SA.classify_users(comm.users)
 
     for comm in communities:
-        SA.classify_users(comm)
+        SA.recommend_by_collaborative_filtering(comm.users)
 
     for comm in communities:
-        SA.recommend_by_collaborative_filtering(comm)
-
-    for comm in communities:
-        for user in comm:
+        for user in comm.users:
             if user.review is None:
                 print(user.name)
                 print(user.would_purchase)
                 print("\n")
 
-assignment_2()
 
+assignment_2()
