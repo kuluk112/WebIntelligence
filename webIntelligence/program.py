@@ -24,13 +24,7 @@ def assignment_1():
     documents = search_engine.search(query)
 
 
-assignment_1()
 
-def assignment_2():
-
-    community_detector = webIntelligence.clustering.CommunityDetector
-    community_detector.do_spectral_clustering_initial()
-    community_detector.do_spectral_clustering_from_save()
 
 def training():
     trainingset_path = "C://Users//Simon//Desktop//SentimentTrainingData.txt"
@@ -88,19 +82,27 @@ def fix_probs():
 
 def assignment_2():
 
+    friendship_path = "C://Users//Simon//Desktop//friendships.reviews.txt"
+    number_of_clusters = 4
 
-
-    users = []#method to cluster
+    community_detector = webIntelligence.clustering.CommunityDetector()
+    communities = community_detector.do_spectral_clustering_initial(friendship_path, number_of_clusters)
+    community_detector.do_spectral_clustering_from_save(friendship_path, number_of_clusters)
 
     SA = webIntelligence.sentiment_analysis.SentimentAnalysis()
-    SA.classify_users(users)
-    SA.recommend_by_collaborative_filtering(users)
 
-    for user in users:
-        if user.review is None:
-            print(user.name)
-            print(user.would_purchase)
-            print("\n")
+    for comm in communities:
+        SA.classify_users(comm)
 
+    for comm in communities:
+        SA.recommend_by_collaborative_filtering(comm)
 
+    for comm in communities:
+        for user in comm:
+            if user.review is None:
+                print(user.name)
+                print(user.would_purchase)
+                print("\n")
+
+assignment_2()
 

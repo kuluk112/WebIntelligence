@@ -62,13 +62,13 @@ class CommunityDetector:
                         continue
                     else:
                         summary = line.split("summary: ")[1].rstrip()
-                        current_user.review = remove_html_tags(summary)
+                        current_user.review = self.remove_html_tags(summary)
                 if line.startswith("review"):
                     if line.startswith("review: *"):
                         continue
                     else:
                         review = line.split("review: ")[1].rstrip()
-                        current_user.review += " " + remove_html_tags(review)
+                        current_user.review += " " + self.remove_html_tags(review)
         return users
 
     def remove_html_tags(self,text):
@@ -104,7 +104,7 @@ class CommunityDetector:
         return adjacency_matrix
 
     def compute_eigenvectors_and_eigenvalues(self,laplacian_matrix):
-        eigen_values,eigen_vectors = eig(self,laplacian_matrix)
+        eigen_values,eigen_vectors = eig(laplacian_matrix)
         return eigen_values,eigen_vectors
 
     def create_laplacian_matrix(self,adjacency_matrix,degree_matrix):
@@ -152,7 +152,7 @@ class CommunityDetector:
             user_index += 1
         return communities
 
-    def do_spectral_clustering_initial(self, path,number_of_clusters):
+    def do_spectral_clustering_initial(self, path, number_of_clusters):
         users = self.load_friendship_network(path)
         adjacency_matrix = self.create_adjecency_matrix(users)
         degree_matrix = self.create_degree_matrix(users)
@@ -192,19 +192,3 @@ class CommunityDetector:
             column = 0
 
         return adjacency_matrix
-
-'''
-path = "C://Users//Lasse//Desktop//Web intelligence//friendships.reviews.txt"
-path_sentiment_training_set = "C://Users//Lasse//Desktop//Web intelligence//SentimentTrainingData.txt"
-path_sentiment_test_set = "C://Users//Lasse//Desktop//Web intelligence//SentimentTestingData.txt"
-
-training_set = load_sentiment_data(path_sentiment_training_set)
-test_set = load_sentiment_data(path_sentiment_test_set)
-pickle.dump(training_set, open("training_set.p", "wb"))
-pickle.dump(test_set, open("test_set.p", "wb"))
-
-#number_of_clusters = 4
-#communities = do_spectral_clustering_from_save(path,number_of_clusters)
-
-print("test")
-'''
