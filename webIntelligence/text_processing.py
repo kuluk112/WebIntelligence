@@ -1,4 +1,3 @@
-import webIntelligence.crawler as crawler
 import nltk
 import math
 from nltk import ngrams
@@ -186,7 +185,8 @@ def get_k_best_results(query_inverted_index,inverted_index,k):
         return document_list
     return document_list[:k]
 
-def make_hashed_super_shingles(content, shingle_size=8,super_shingle_size=6,seed=1234, permutations= 84):
+
+def make_hashed_shingles_and_super_shingles(content, shingle_size=8,super_shingle_size=6,seed=1234, permutations= 84):
     random.seed(seed)
     random_ints = []
     for i in range(permutations):
@@ -203,10 +203,10 @@ def make_hashed_super_shingles(content, shingle_size=8,super_shingle_size=6,seed
             hashcode = hashlib.md5(str(shingle).encode('utf-8')).hexdigest()
             value = int(hashcode,16)
             hashed_shingles.add(value ^ permutation)
+        if len(hashed_shingles) is 0:
+            return set(), set()
         sketch.add(min(hashed_shingles))
         hashed_shingles.clear()
-
-
 
     hashed_super_shingles = set()
     sketch_list = list(sketch)
@@ -222,10 +222,7 @@ def make_hashed_super_shingles(content, shingle_size=8,super_shingle_size=6,seed
         hashcode = hashlib.md5(str(super_shingle).encode('utf-8')).hexdigest()
         value = int(hashcode, 16)
         hashed_super_shingles.add(value)
-    return shingles_set, hashed_super_shingles
-
-
-make_hashed_super_shingles("hello good morning hello good morning hello good morning morning hello good morning hello good morning hello good morning hello good morning morning hello good morning hello good morning")
+    return sketch, hashed_super_shingles
 
 
 def duplicate_detection(new_page,pages, threshold_super_shingle=2, threshold_similarity=0.9):

@@ -1,8 +1,5 @@
 import random
-from urllib.parse import urlparse
 
-import webIntelligence.crawler as crwl
-import numpy
 
 class PageRanker:
     def __init__(self, connected_pages):
@@ -28,7 +25,7 @@ class PageRanker:
             y = 0
             for inner in self.network_list:
                 for link in outer.out_links:
-                    if link.url.netloc == inner.url.netloc:
+                    if link == inner.url.geturl():
                         if divisor != 0:
                             self.transition_probability_matrix[x][y] = 1/divisor
                         else:
@@ -76,32 +73,17 @@ class PageRanker:
 
 #((1 - self.alpha) * 1/divisor) + (self.alpha * (1 / self.matrix_size))
 
-def run():
-    a = crwl.Page(urlparse("https://111.com"))
-    b = crwl.Page(urlparse("https://222.com"))
-    c = crwl.Page(urlparse("https://333.com"))
+    def give_pageranks(self):
 
+        self.insert_connections()
+        self.enable_teleportation()
 
-    a.out_links.append(c)
-    a.in_links.append(b)
-    a.in_links.append(c)
+        #print_matrix(PR.transition_probability_matrix)
 
-    b.out_links.append(a)
-    b.out_links.append(c)
-    b.in_links.append(c)
+        pageranks = self.page_rank(200)
 
-    c.out_links.append(a)
-    c.out_links.append(b)
-    c.in_links.append(a)
-    c.in_links.append(b)
-
-    PR = PageRanker([a,b,c])
-    PR.insert_connections()
-    PR.enable_teleportation()
-    print_matrix(PR.transition_probability_matrix)
-    vector = PR.page_rank(200)
-    for i in vector:
-        print(i)
+        for i in range(len(pageranks)):
+            self.network_list[i].pagerank = pageranks[i]
 
 def print_matrix(matrix):
     for i in range(len(matrix)):
@@ -109,5 +91,3 @@ def print_matrix(matrix):
             print(matrix[i][j], end=' ')
         print()
 
-run()
-#https://www.nltk.org/book/ch06.html
