@@ -97,28 +97,10 @@ class Indexer:
         query_document = Document(id=-1, query=query)
         #Need tf*-idf for query
 
-    def create_query_document(self,query):
-        tokenized_query = self.tokenize(query)
-        query_document = Document(tokenized_query)
-        return query_document
-
-    def create_inverted_index_from_query(self, document):
-        inverted_index = {}
-
-        for term in document.query:
-            if term not in inverted_index:
-                inverted_index[term] = RowEntry(document)
-                document.term_dictionary[term] = DocumentValues()
-            elif term not in document.term_dictionary:
-                inverted_index[term].df += 1
-                document.term_dictionary[term] = DocumentValues()
-            else:
-                document.term_dictionary[term].tf += 1
-        self.calc_tf_star(inverted_index)
-        return inverted_index
 
     def calc_tf_star(self,inverted_index):
         for key, value in inverted_index.items():
+            # For each document in postings --> calculate term frequency *
             for document in value.documents:
                 document_values = document.term_dictionary[key]
                 document_values.tf_star = 1 + math.log10(document_values.tf)
@@ -127,7 +109,7 @@ class Indexer:
         for key, value in inverted_index.items():
             for document in value.documents:
                 document_values = document.term_dictionary[key]
-                document_values.tf_idf = document_values.tf_star*value.idf
+                document_values.tf_idf = document_values.tf_star * value.idf
                 document.weight_sum_not_squared += document_values.tf_idf**2
 
 
@@ -146,6 +128,7 @@ class Indexer:
                 if amount_of_docs < r:
                     amount_of_docs += 1
                     top_r_contenders.append(doc)
+            #Hvad er value præcist her ??
             inverted_index_champlist[key] = value
             inverted_index_champlist[key].documents = list(top_r_contenders)
         self.champion_index = inverted_index_champlist
@@ -157,25 +140,50 @@ class Indexer:
         documents = self.get_k_best_results(query_inverted_index, self.champion_index, top_k_results)
         return documents
 
-    def get_k_best_results(self,query_inverted_index,inverted_index, k):
+    def create_query_document(self,query):
+        tokenized_query = self.tokenize(query)
+        query_document = Document(tokenized_query)
+        return query_document
+
+    #hjælp ???
+    def create_inverted_index_from_query(self, document):
+        inverted_index = {}
+
+        for term in document.query:
+            if term not in inverted_index:
+                inverted_index[term] = RowEntry(document)
+                document.term_dictionary[term] = DocumentValues()
+            elif term not in document.term_dictionary:
+                inverted_index[term].df += 1
+                document.term_dictionary[term] = DocumentValues()
+            else:
+                document.term_dictionary[term].tf += 1
+        self.calc_tf_star(inverted_index)
+        return inverted_index
+
+    def get_k_best_results(self,query_inverted_index, champ_index, k):
         intersection_list = []
 
         # Calc weight for each term of query, which is present in the terms of the inverted_index
+        # weight = champ.idf * word.tf*
         for key, value in query_inverted_index.items():
-            if key in inverted_index:
-                row = inverted_index[key]
-                weight = row.idf*value.documents[0].term_dictionary[key].tf_star
+            if key in champ_index:
+                row = champ_index[key]
+                weight = row.idf * value.documents[0].term_dictionary[key].tf_star
+                # words and (champ)docs intersect
                 intersection_list.append((key, weight, row))
 
+        # intersect champion docs
         document_set = set()
         for item in intersection_list:
             for doc in item[2].documents:
                 document_set.add(doc)
 
+        # Regner den ikke normalised weight ud for alle terms i doc???
         for doc in document_set:
             doc.length = math.sqrt(doc.weight_sum_not_squared)
             for value in doc.term_dictionary.values():
-                value.normalised = value.tf_idf/doc.length
+                value.normalised = value.tf_idf / doc.length
 
         for doc in document_set:
             product = 0
@@ -184,7 +192,7 @@ class Indexer:
                 query_weight = entry[1]
                 if term in doc.term_dictionary:
                     term_normalised_weight = doc.term_dictionary[term].normalised
-                    product += query_weight*term_normalised_weight
+                    product += query_weight * term_normalised_weight
             doc.product = product * 1 #doc.page.pagerank
 
         document_list = list(document_set)

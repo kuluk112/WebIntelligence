@@ -121,6 +121,8 @@ class CommunityDetector:
     def k_means(self, eigen_values,eigen_vectors,k):
         reduced_matrix = eigen_vectors[:, 0:k]
         centroids,_ = kmeans(reduced_matrix,k)
+
+        # vq ???
         clx,_ = vq(reduced_matrix,centroids)
         return clx
 
@@ -138,6 +140,7 @@ class CommunityDetector:
 
         clx = self.k_means(eigen_values,eigen_vectors,k)
         communities = []
+        # .values()???
         user_list = list(users.values())
         user_list = sorted(user_list, key=lambda user: user.id)
 
@@ -145,6 +148,7 @@ class CommunityDetector:
             communities.append(Community(community_id))
 
         user_index = 0
+        # id fra clx???
         for community_id_of_node in clx:
             current_user = user_list[user_index]
             current_user.community_id = community_id_of_node

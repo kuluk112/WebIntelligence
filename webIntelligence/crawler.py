@@ -185,19 +185,6 @@ class Crawler:
                 if not backqueue.queue:
                     empty_backqueue = True
 
-    def is_duplicate(self, new_page, threshold_super_shingle=2, threshold_similarity=0.9):
-        if new_page is None:
-            return True
-        is_duplicate = False
-
-        for page in self.page_list:
-            if len(page.hashed_supershingles.intersection(new_page.hashed_supershingles)) >= threshold_super_shingle:
-                if len(page.sketch.intersection(new_page.sketch))/ len(page.sketch.union(new_page.sketch)) >= threshold_similarity:
-                    is_duplicate = True
-                    return is_duplicate
-        return is_duplicate
-
-
 
     def fetch_webpage(self,url):
 
@@ -233,21 +220,29 @@ class Crawler:
         page.out_links = links
         return page
 
-    def cleanse_links(self, links):
-        result_links = []
-        for i in links:
-            if i.startswith("http"):
-                result_links.append(i)
-        return result_links
+
+    def is_duplicate(self, new_page, threshold_super_shingle=2, threshold_similarity=0.9):
+        if new_page is None:
+            return True
+        is_duplicate = False
+
+        for page in self.page_list:
+            if len(page.hashed_supershingles.intersection(new_page.hashed_supershingles)) >= threshold_super_shingle:
+                if len(page.sketch.intersection(new_page.sketch))/ len(page.sketch.union(new_page.sketch)) >= threshold_similarity:
+                    is_duplicate = True
+                    return is_duplicate
+        return is_duplicate
 
     def make_hashed_shingles_and_super_shingles(self, content, shingle_size=8, super_shingle_size=6, seed=1234,
                                                 permutations=84):
+        # ???
         random.seed(seed)
         random_ints = []
         for i in range(permutations):
             random_ints.append(random.randint(0, 10 ** 42))
         sketch = set()
         hashed_shingles = set()
+        # ???
         shingles = ngrams(content.split(), shingle_size)
         shingles_set = set()
         for shingle in shingles:
@@ -269,8 +264,7 @@ class Crawler:
         elements_in_sketches = len(sketch)
 
         non_overlapping_super_sketches = [sketch_list[i * super_shingle_size:(i + 1) * super_shingle_size] for i in
-                                          range((
-                                                            elements_in_sketches + super_shingle_size - 1) // super_shingle_size)]
+                                          range((elements_in_sketches + super_shingle_size - 1) // super_shingle_size)]
 
         for super_shingle in non_overlapping_super_sketches:
             super_shingle_set.add(str(super_shingle))
@@ -282,3 +276,9 @@ class Crawler:
 
         return sketch, hashed_super_shingles
 
+    def cleanse_links(self, links):
+        result_links = []
+        for i in links:
+            if i.startswith("http"):
+                result_links.append(i)
+        return result_links
