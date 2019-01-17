@@ -32,12 +32,39 @@ def assignment_1():
 
     for doc in documents:
         print(doc.page.url.geturl())
+        print(doc.product)
+        print(doc.page.pagerank)
 
+
+
+
+def assignment_2():
+
+    friendship_path = "C://Users//Lasse//Desktop//Web intelligence//friendships.reviews.txt"
+    number_of_clusters = 4
+
+    community_detector = webIntelligence.clustering.CommunityDetector()
+    #communities = community_detector.do_spectral_clustering_initial(friendship_path, number_of_clusters)
+    communities = community_detector.do_spectral_clustering_from_save(friendship_path, number_of_clusters)
+
+    SA = pickle.load(open("negation_and_pos.p", "rb"))
+    for comm in communities:
+        SA.classify_users(comm.users)
+
+    for comm in communities:
+        SA.recommend_by_collaborative_filtering(comm.users)
+
+    for comm in communities:
+        for user in comm.users:
+            if user.review is None:
+                print(user.name)
+                print(user.would_purchase)
+                print("\n")
 
 
 def training():
-    trainingset_path = "C://Users//Simon//Desktop//SentimentTrainingData.txt"
-    testset_path = "C://Users//Simon//Desktop//SentimentTestingData.txt"
+    trainingset_path = "C://Users//Lasse//Desktop//Web intelligence//SentimentTrainingData.txt"
+    testset_path = "C://Users//Lasse//Desktop//Web intelligence//SentimentTestData.txt"
 
     SA = webIntelligence.sentiment_analysis.SentimentAnalysis()
     training_set = SA.load_sentiment_data(trainingset_path)
@@ -70,39 +97,19 @@ def training():
     #1.0
     #0.8334427664696871
     #0.8334427664696871
+
+
 def load_NBC():
-    testset_path = "C://Users//Simon//Desktop//SentimentTestingData.txt"
-    SA = pickle.load(open("BALANCED_negate_AND_POS.p", "rb"))
+    testset_path = "C://Users//Lasse//Desktop//Web intelligence//SentimentTestingData.txt"
+    #SA = pickle.load(open("BALANCED_negate_AND_POS.p", "rb"))
+    SA = pickle.load(open("only_pos.p", "rb"))
     test_set = SA.load_sentiment_data(testset_path)
-    precision, recall, accuracy, f1 = SA.evaluate(test_set, False, False)
-    print(precision)
-    print(recall)
-    print(accuracy)
-    print(f1)
+    precision, recall, accuracy, f1 = SA.evaluate(test_set, False, True)
+    print("Accuracy: ", accuracy)
+    print("Precision: ", precision)
+    print("Recall: ", recall)
+    print("F1: ", f1)
 
+load_NBC()
 
-def assignment_2():
-
-    friendship_path = "C://Users//Lasse//Desktop//Web intelligence//friendships.reviews.txt"
-    number_of_clusters = 4
-
-    community_detector = webIntelligence.clustering.CommunityDetector()
-    #communities = community_detector.do_spectral_clustering_initial(friendship_path, number_of_clusters)
-    communities = community_detector.do_spectral_clustering_from_save(friendship_path, number_of_clusters)
-
-    SA = pickle.load(open("negation_and_pos.p", "rb"))
-    for comm in communities:
-        SA.classify_users(comm.users)
-
-    for comm in communities:
-        SA.recommend_by_collaborative_filtering(comm.users)
-
-    for comm in communities:
-        for user in comm.users:
-            if user.review is None:
-                print(user.name)
-                print(user.would_purchase)
-                print("\n")
-
-
-assignment_1()
+#assignment_1()

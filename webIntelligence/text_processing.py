@@ -188,7 +188,7 @@ class Indexer:
             doc.product = product * 1 #doc.page.pagerank
 
         document_list = list(document_set)
-        sorted(document_list, key=lambda doc: doc.product,reverse=True)
+        document_list = sorted(document_list, key=lambda doc: doc.product,reverse=True)
         if len(document_list)<k:
             return document_list
         return document_list[:k]
