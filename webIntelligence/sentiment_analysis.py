@@ -22,31 +22,36 @@ class SentimentAnalysis:
 
     def classify_with_NBC(self, text, negate, pos):
         features = self.tokenize_and_extract_features(text, negate, pos)
-        prob_positive_review = []
-        prob_negative_review = []
-        positive_probability = 0
-        negative_probabiity = 0
+        pos_word_given_class = []
+        neg_word_given_class = []
+        sentiment_positive_probability = 1
+        sentiment_negative_probability = 1
         for i in features:
             if i in self.bag_of_words:
                 # 1 and len(dict) --> laplacian smoothing
                 pwc_pos = (self.bag_of_words[i].pos_count + 1) / (self.bag_of_words[i].tot_count() + len(self.bag_of_words))
             else: 
                 pwc_pos = (0 + 1) / (0 + len(self.bag_of_words))
-            word_score_pos = pwc_pos * self.positive_probability
-            prob_positive_review.append(word_score_pos)
-
+            pos_word_given_class.append(pwc_pos)
 
             if i in self.bag_of_words:
                 # 1 and len(dict) --> laplacian smoothing
                 pwc_neg = (self.bag_of_words[i].neg_count + 1) / (self.bag_of_words[i].tot_count() + len(self.bag_of_words))
             else:
                 pwc_neg = (0 + 1) / (0 + len(self.bag_of_words))
-            word_score_neg = pwc_neg * self.negative_probability
-            prob_negative_review.append(word_score_neg)
+            neg_word_given_class.append(pwc_neg)
 
-        positive_probability += sum(prob_positive_review)
-        negative_probabiity += sum(prob_negative_review)
-        return positive_probability, negative_probabiity
+        #P(word|class)
+        for probability in pos_word_given_class:
+            sentiment_positive_probability *= probability
+        # mult(P(word|class)) * P(class)
+            sentiment_positive_probability *= self.positive_probability
+
+        for probability in neg_word_given_class:
+            sentiment_negative_probability *= probability
+        sentiment_negative_probability *= self.negative_probability
+
+        return sentiment_positive_probability, sentiment_negative_probability
 
 
 
