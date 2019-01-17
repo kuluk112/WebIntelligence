@@ -10,18 +10,28 @@ def assignment_1():
     priorities = 3
     threads = 1
     politeness_sec = 0.2
-    number_of_pages = 20
+    number_of_pages = 1000
+
+    '''
     url_seed = "https://curlie.org/News/Headline_Links/"
     crawler = webIntelligence.crawler.Crawler(priorities,threads,politeness_sec)
     crawler.run_crawler(url_seed,number_of_pages)
     pageranker = webIntelligence.PageRanker.PageRanker(crawler.page_list)
     pageranker.give_pageranks()
-
     search_engine = webIntelligence.text_processing.Indexer()
     search_engine.create_inverted_index_from_pages(crawler.page_list)
     search_engine.create_champlist(20)
-    query = "Trump's reference to Wounded Knee evokes the dark history of suppression of indigenous religions"
+    pickle.dump(search_engine,open("search_engine.p", "wb"))
+    '''
+
+    search_engine = pickle.load(open("search_engine.p", "rb"))
+    query = "Brexit europe corbyn theressa sport"
+    tokenized_query = search_engine.tokenize(query)
+    print(tokenized_query)
     documents = search_engine.search(query)
+
+    for doc in documents:
+        print(doc.page.url.geturl())
 
 
 
@@ -95,4 +105,4 @@ def assignment_2():
                 print("\n")
 
 
-assignment_2()
+assignment_1()

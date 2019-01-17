@@ -157,7 +157,7 @@ class Indexer:
         documents = self.get_k_best_results(query_inverted_index, self.champion_index, top_k_results)
         return documents
 
-    def get_k_best_results(self,query_inverted_index,inverted_index,k):
+    def get_k_best_results(self,query_inverted_index,inverted_index, k):
         intersection_list = []
 
         # Calc weight for each term of query, which is present in the terms of the inverted_index
@@ -185,10 +185,10 @@ class Indexer:
                 if term in doc.term_dictionary:
                     term_normalised_weight = doc.term_dictionary[term].normalised
                     product += query_weight*term_normalised_weight
-            doc.product = product * doc.page.pagerank
+            doc.product = product * 1 #doc.page.pagerank
 
         document_list = list(document_set)
-        sorted(document_list, key=lambda doc: doc.product)
+        sorted(document_list, key=lambda doc: doc.product,reverse=True)
         if len(document_list)<k:
             return document_list
         return document_list[:k]

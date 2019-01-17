@@ -206,6 +206,8 @@ class Crawler:
             response = urllib.request.urlopen(page.url.geturl())
         except urllib.error.HTTPError:
             return None
+        except UnicodeEncodeError:
+            return None
         soup = BeautifulSoup(response, 'html.parser')
         links = []
         for link in soup.find_all('a', href=True):

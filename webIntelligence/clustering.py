@@ -123,11 +123,11 @@ class CommunityDetector:
         centroids,_ = kmeans(reduced_matrix,k)
         clx,_ = vq(reduced_matrix,centroids)
         return clx
+
     def correct_eigen_format(self, eigen_values,eigen_vectors):
         idx = np.argsort(eigen_values)
         eigen_values = eigen_values[idx]
         eigen_vectors = eigen_vectors[:, idx]
-
         eigen_values = eigen_values[1:]
         eigen_vectors = eigen_vectors[:, 1:]
         eigen_values = eigen_values.reshape((-1, 1))

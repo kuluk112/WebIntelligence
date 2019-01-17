@@ -6,7 +6,7 @@ class PageRanker:
     def __init__(self, connected_pages):
 
         self.matrix_size = len(connected_pages)
-        self.network_list = connected_pages
+        self.page_list = connected_pages
         self.transition_probability_matrix = self.init_matrix(self.matrix_size)
         self.alpha = 0.10 #teleport probability
 
@@ -21,10 +21,10 @@ class PageRanker:
 
     def insert_connections(self):
         x = 0
-        for outer in self.network_list:
+        for outer in self.page_list:
             divisor = len(outer.out_links)
             y = 0
-            for inner in self.network_list:
+            for inner in self.page_list:
                 if outer.url.geturl() == inner.url.geturl():
                     y += 1
                     continue
@@ -39,10 +39,10 @@ class PageRanker:
 
     def enable_teleportation(self):
         x = 0
-        for outer in self.network_list:
+        for outer in self.page_list:
             divisor = len(outer.out_links)
             y = 0
-            for inner in self.network_list:
+            for inner in self.page_list:
                 if divisor != 0:
                     self.transition_probability_matrix[x][y] = ((1 - self.alpha) * self.transition_probability_matrix[x][y]) + (self.alpha * (1 / self.matrix_size))
                 else:
@@ -80,21 +80,21 @@ class PageRanker:
     def remove_excessive_out_links(self):
         good_links = []
         page_list = []
-        for i in self.network_list:
+        for i in self.page_list:
             for j in i.out_links:
                 url_obj = urlparse(j)
 
                 if url_obj.geturl() == i.url.geturl():
                     break
 
-                for k in self.network_list:
+                for k in self.page_list:
                     if k.url.geturl() == url_obj.geturl():
                         good_links.append(url_obj)
                         break
             i.out_links = good_links
             page_list.append(i)
             good_links = []
-        self.network_list = page_list
+        self.page_list = page_list
 
 
 
@@ -102,15 +102,13 @@ class PageRanker:
 
         self.remove_excessive_out_links()
 
-        self.insert_connections()
-        self.enable_teleportation()
-
-        #print_matrix(self.transition_probability_matrix)
+        self.insert_connections()   #Transition_probability-matrix
+        self.enable_teleportation() 
 
         pageranks = self.page_rank(200)
 
         for i in range(len(pageranks)):
-            self.network_list[i].pagerank = pageranks[i]
+            self.page_list[i].pagerank = pageranks[i]
 
 def print_matrix(matrix):
     for i in range(len(matrix)):
