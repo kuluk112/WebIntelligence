@@ -73,10 +73,14 @@ class Indexer:
             tokenized_content = self.tokenize(page.content)
             document = Document(tokenized_content,page, document_id)
             document_list.append(document)
+            
             for term in document.tokekenized_content:
+                #adds to inverted index
                 if term not in inverted_index:
                     inverted_index[term] = RowEntry(document)
                     document.term_dictionary[term] = DocumentValues()
+                
+                # counts up df and sets reference to document
                 elif term not in document.term_dictionary:
                     inverted_index[term].df += 1
                     inverted_index[term].documents.append(document)
@@ -97,26 +101,25 @@ class Indexer:
         query_document = Document(id=-1, query=query)
         #Need tf*-idf for query
 
-
+    # insert tf_idf for terms in documents
     def calc_tf_star(self,inverted_index):
         for key, value in inverted_index.items():
             # For each document in postings --> calculate term frequency *
             for document in value.documents:
                 document_values = document.term_dictionary[key]
                 document_values.tf_star = 1 + math.log10(document_values.tf)
+                
+    def calc_idf(self,inverted_index,number_of_documents):
+        for key in inverted_index:
+            row = inverted_index[key]
+            row.idf = math.log10(number_of_documents/row.df)
 
     def calc_tf_idf(self,inverted_index, number_of_documents):
         for key, value in inverted_index.items():
             for document in value.documents:
                 document_values = document.term_dictionary[key]
                 document_values.tf_idf = document_values.tf_star * value.idf
-                document.weight_sum_not_squared += document_values.tf_idf**2
-
-
-    def calc_idf(self,inverted_index,number_of_documents):
-        for key in inverted_index:
-            row = inverted_index[key]
-            row.idf = math.log10(number_of_documents/row.df)
+                document.weight_sum_not_squared += document_values.tf_idf ** 2
 
     def create_champlist(self, r):
         inverted_index_champlist = {}
@@ -124,11 +127,11 @@ class Indexer:
         for key, value in self.inverted_index.items():
             top_r_contenders = []
             amount_of_docs = 0
-            for doc in sorted(value.documents, key=lambda doc: doc.term_dictionary[key].tf_idf):
+            for doc in sorted(value.documents, key=lambda doc: doc.term_dictionary[key].tf_idf, reverse=True):
                 if amount_of_docs < r:
                     amount_of_docs += 1
                     top_r_contenders.append(doc)
-            #Hvad er value præcist her ??
+
             inverted_index_champlist[key] = value
             inverted_index_champlist[key].documents = list(top_r_contenders)
         self.champion_index = inverted_index_champlist
@@ -145,7 +148,7 @@ class Indexer:
         query_document = Document(tokenized_query)
         return query_document
 
-    #hjælp ???
+
     def create_inverted_index_from_query(self, document):
         inverted_index = {}
 
@@ -179,11 +182,12 @@ class Indexer:
             for doc in item[2].documents:
                 document_set.add(doc)
 
-        # Regner den ikke normalised weight ud for alle terms i doc???
+        # calc normalised weight for all terms in docs
         for doc in document_set:
             doc.length = math.sqrt(doc.weight_sum_not_squared)
             for value in doc.term_dictionary.values():
                 value.normalised = value.tf_idf / doc.length
+
 
         for doc in document_set:
             product = 0
@@ -194,6 +198,7 @@ class Indexer:
                     term_normalised_weight = doc.term_dictionary[term].normalised
                     product += query_weight * term_normalised_weight
             doc.product = product * 1 #doc.page.pagerank
+
 
         document_list = list(document_set)
         document_list = sorted(document_list, key=lambda doc: doc.product,reverse=True)

@@ -70,7 +70,7 @@ class Crawler:
             heapnode, delay, visit_allowed = self.handle_robot(url,heapnode)
 
             if visit_allowed:
-                page = self.fetch_webpage(url)
+                page = self.fetch_webpage(url) # and shingle
                 heapnode.allow_at_time = time.time() + delay
                 self.timing_heap.put(heapnode)
                 if self.is_duplicate(page) is False:
@@ -227,22 +227,22 @@ class Crawler:
         is_duplicate = False
 
         for page in self.page_list:
+            # jaccard
             if len(page.hashed_supershingles.intersection(new_page.hashed_supershingles)) >= threshold_super_shingle:
-                if len(page.sketch.intersection(new_page.sketch))/ len(page.sketch.union(new_page.sketch)) >= threshold_similarity:
+                if len(page.sketch.intersection(new_page.sketch)) / len(page.sketch.union(new_page.sketch)) >= threshold_similarity:
                     is_duplicate = True
                     return is_duplicate
         return is_duplicate
 
     def make_hashed_shingles_and_super_shingles(self, content, shingle_size=8, super_shingle_size=6, seed=1234,
                                                 permutations=84):
-        # ???
         random.seed(seed)
         random_ints = []
         for i in range(permutations):
             random_ints.append(random.randint(0, 10 ** 42))
         sketch = set()
         hashed_shingles = set()
-        # ???
+
         shingles = ngrams(content.split(), shingle_size)
         shingles_set = set()
         for shingle in shingles:
